@@ -1,28 +1,26 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Microsoft.Extensions.Configuration;
-using SolidPrinciples;
-
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using SolidPrinciples.Implementation;
+using SolidPrinciples.Interfaces;
 
 
 var cfg = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-var configReader = new ConfigurationReader(cfg);
-var numberGenerator = new NumberGenerator(configReader);
-var number = numberGenerator.GetRandomNumber();
-var numberAnalyzer = new NumberAnalyzer(number, configReader.GetAttemptsCount());
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-Console.WriteLine($"Please guess the number from {configReader.GetMinVal()} to {configReader.GetMaxVal()} in {configReader.GetAttemptsCount()} attempts.");
+builder.Services.AddSingleton<IConfiguration>(cfg);
+builder.Services.AddSingleton<IConfigurationReader, ConfigurationReader>();
+builder.Services.AddSingleton<IInput, ConsoleInput>();
+builder.Services.AddSingleton<IOutput, ConsoleOutput>();
+builder.Services.AddSingleton<INumberGenerator, NumberGenerator>();
+builder.Services.AddSingleton<INumberAnalyzer, NumberAnalyzer>();
+builder.Services.AddSingleton<IInteractor, Interact>();
+using IHost host = builder.Build();
 
-for (int i = 1; i <= configReader.GetAttemptsCount(); i++)
-{
-    Console.WriteLine("Enter your number:");
-    var supposed = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine(numberAnalyzer.AnalyzeVal(supposed));
-    if (supposed == number)
-    {
-        break;
-    }
-    Console.WriteLine(numberAnalyzer.AnalyzeAttempts(i));
-}
+var scope = host.Services.CreateScope();
+
+var interactor = scope.ServiceProvider.GetRequiredService<IInteractor>();
+interactor.Interact();
