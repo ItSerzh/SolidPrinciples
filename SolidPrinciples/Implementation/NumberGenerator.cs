@@ -4,16 +4,13 @@ namespace SolidPrinciples.Implementation
 {
     internal class NumberGenerator(IConfigurationReader crd) : INumberGenerator
     {
-        private readonly int _min = crd.MinVal;
-        private readonly int _max = crd.MaxVal;
+        private readonly int _min = crd.GetMinVal();
+        private readonly int _max = crd.GewtMaxVal();
 
-        public int RandomNumber
+        public int GetRandomInt()
         {
-            get
-            {
-                var rnd = new Random();
-                return rnd.Next(_min, _max + 1);
-            }
+            var rnd = new Random();
+            return rnd.Next(_min, _max + 1);
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     internal interface INumberGenerator
     {
-        int RandomNumber { get; }
+        int GetRandomInt();
     }
 }

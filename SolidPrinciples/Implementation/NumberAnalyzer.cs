@@ -6,8 +6,8 @@ namespace SolidPrinciples.Implementation
     {
         private readonly IInput _input = input;
         private readonly IOutput _output = output;
-        private readonly int _requiredNumber = generator.RandomNumber;
-        private readonly int _attemptsCount = cfgReader.AttemptsCount;
+        private readonly int _requiredNumber = generator.GetRandomInt();
+        private readonly int _attemptsCount = cfgReader.GetAttemptsCount();
 
         private string AnalyzeVal(int supposed)
         {

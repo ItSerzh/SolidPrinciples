@@ -9,8 +9,17 @@ namespace SolidPrinciples.Implementation
         private const string MaxValName = "Range:MaxVal";
         private const string AttemptsCountName = "AttemptsCount";
 
-        public int MinVal { get; } = cfg.GetValue<int>(MinValName);
-        public int MaxVal { get; } = cfg.GetValue<int>(MaxValName);
-        public int AttemptsCount { get; } = cfg.GetValue<int>(AttemptsCountName);
+        public int GetMinVal()
+        {
+            return cfg.GetValue<int>(MinValName);
+        }
+        public int GewtMaxVal()
+        {
+            return cfg.GetValue<int>(MaxValName);
+        }
+        public int GetAttemptsCount()
+        {
+            return cfg.GetValue<int>(AttemptsCountName);
+        }
     }
 }

@@ -6,9 +6,9 @@ namespace SolidPrinciples.Implementation
     {
         private readonly INumberAnalyzer _analyzer = analyzer;
         private readonly IOutput _output = output;
-        private readonly int _minVal = cfgReader.MinVal;
-        private readonly int _maxVal = cfgReader.MaxVal;
-        private readonly int _attemptsCount = cfgReader.AttemptsCount;
+        private readonly int _minVal = cfgReader.GetMinVal();
+        private readonly int _maxVal = cfgReader.GewtMaxVal();
+        private readonly int _attemptsCount = cfgReader.GetAttemptsCount();
 
         public void Interact()
         {

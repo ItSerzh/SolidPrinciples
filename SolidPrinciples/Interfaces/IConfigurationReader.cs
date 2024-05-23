@@ -2,8 +2,8 @@
 {
     public interface IConfigurationReader
     {
-        int MinVal { get; }
-        int MaxVal { get; }
-        int AttemptsCount { get; }
+        int GetMinVal();
+        int GewtMaxVal();
+        int GetAttemptsCount();
     }
 }
